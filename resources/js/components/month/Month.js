@@ -59,6 +59,7 @@ function Month(){
                     id:response.data.id,
                     sch_category:response.data.sch_category,
                     sch_contents:response.data.sch_contents,
+                    sch_status:response.data.sch_status,
                     // sch_memo:response.data.sch_memo,
                     sch_date:response.data.sch_date,
                     sch_hour:response.data.sch_time.substr(0,2),

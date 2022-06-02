@@ -2,20 +2,153 @@ li{
   list-style-type: none;
   font-size:0.8rem;
 }
+button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+}
+
+
+
+
 
 .todo{
   width:20%;
-  // float: left;
-  background-color: beige;
+  background-color: rgb(240, 246, 246);
+  h1{
+    margin:2rem auto;
+    text-align: center;
+  }
 }
 
+
+
+//入力フォーム
+.inputForm{
+  width:100%;
+  text-align: center;
+      .input-form{
+        // width:60%;
+        height: 30px;
+        border: solid 1px rgb(105, 105, 120);
+      }
+      .btn{
+        padding:0;
+        .MuiSvgIcon-root{
+          margin :0 0 2px 3px;
+          box-sizing: border-box;
+          background-color: rgb(88, 83, 150);
+          height: 30px;
+          color: rgb(255, 255, 255);
+          &:hover{
+            background-color: rgb(159, 160, 188);
+          }
+        }
+      }
+}
+
+
+//Todoリスト
+.todoList{
+  height: auto;
+  margin :30px 10px;
+}
 .todoGroup{
-  display: flex;
+  margin:4px 4px 8px 4px ;
+  height: 2.3rem;
+  // display: flex;
+  // flex-direction: row;
+  // padding:3px;
+  background-color: rgb(255, 255, 255);
 }
-:checked + .todoText {
-  text-decoration: line-through;
-  opacity: 0.5;
+.icons{
+  float: right;
+  position: relative;
+  bottom:25px;
+  right: 5px;
+  .MuiSvgIcon-root{
+    width:17px;
+    height: 17px;
+    color: rgb(124, 124, 144);
+    &:hover{
+      color:#419976;
+    }
+  }
+  
 }
+
+
+//チェックボックス
+.my-checkbox {
+  display: block;
+  position: relative;
+  // margin: 1em 0;
+  padding:7px 0 0 33px;
+  color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  user-select: none; /* テキストが選択されてしまうのを防ぐ */
+  /* inputは非表示にする */
+  input {
+    display: none;
+  }
+}
+// チェックが入る前
+/* □ */
+.checkmark {
+  position: absolute;
+  top: 10px; /* 上からの位置 */
+  left: 7px;
+  height: 17px; /* 幅 */
+  width: 17px; /* 幅 */
+  border: solid 1px rgb(105, 105, 120); /* 線 */
+  // border-radius: 4px;
+  box-sizing: border-box;
+
+  /* ✓ */
+  &:after {
+    content: "";
+    position: absolute;
+    border: solid 1px rgb(105, 105, 120);
+    border-width: 0 2px 2px 0;
+    left: 6px;
+    top: 0;
+    width: 9px;
+    height: 14px;
+    transform: rotate(45deg);
+    opacity: 0; /* 透明にしておく */
+  }
+}
+
+/* チェックが入ったとき */
+.my-checkbox {
+  /* □ */
+  input:checked + .checkmark {
+    // background: #9999e9; 
+    border-color:  rgb(240, 246, 246); 
+  }
+  /* ✓ */
+  input:checked + .checkmark:after {
+    opacity: 1;
+  }
+  input:checked + .todoText{
+    text-decoration: line-through;
+  }
+}
+
+
+
+
+
+
+
+
+// :checked + .todoText {
+//   text-decoration: line-through;
+//   opacity: 0.5;
+// }
 
 // .calender-header{
 //   width:80%;

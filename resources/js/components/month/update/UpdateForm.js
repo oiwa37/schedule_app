@@ -32,7 +32,7 @@ function UpdateForm(props){
 
     return (
             <Dialog onClose={editHandleClose} open={open}>
-                <DialogTitle>予定の日付が入るようにする</DialogTitle>
+                {/* <DialogTitle>予定の日付が入るようにする</DialogTitle> */}
                 <DialogContent>
                     <DialogContentText>
                         スケジュール更新

@@ -32,6 +32,7 @@ class ScheduleController extends Controller {
         $schedules->sch_end_time = $request->sch_end_time;
         $schedules->sch_category = $request->sch_category;
         $schedules->sch_contents = $request->sch_contents;
+        $schedules->sch_status = $request->sch_status;
         // $schedules->sch_memo = $request->sch_memo;
         $schedules->save();
         return response()->json($schedules);
@@ -52,6 +53,7 @@ class ScheduleController extends Controller {
         $schedules->sch_end_time = $request->sch_end_time;
         $schedules->sch_category = $request->sch_category;
         $schedules->sch_contents = $request->sch_contents;
+        $schedules->sch_status = $request->sch_status;
         // $schedules->sch_memo = $request->sch_memo;
         
         $schedules->save();

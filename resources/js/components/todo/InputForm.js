@@ -1,5 +1,6 @@
 import React,{ Fragment, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import AddIcon from '@mui/icons-material/Add';
 
 export const InputForm = (props) => {
     const {task,setTask} = props;
@@ -45,8 +46,10 @@ export const InputForm = (props) => {
     return (
         <div className="inputForm">
             <form onChange={inputChange}>
-                <input type="text" id="sch_id" name="sch_contents" />
-                <button  onClick={createTask}>追加</button>
+                <input type="text" id="sch_id" name="sch_contents" className="input-form" />
+                <button  onClick={createTask} className="btn">
+                    <AddIcon />
+                </button>
             </form>
         </div>
     )

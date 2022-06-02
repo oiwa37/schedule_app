@@ -3,6 +3,13 @@ import { set } from 'lodash';
 import React,{ Fragment, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import GetSchedule from '../month/getSchedule/getSchedule';
+import UpdateForm from '../month/update/updateForm';
+import { todos } from '../common/Common';
+import { zeroPadding } from '../common/Common';
+// import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@material-ui/icons/Edit';
+import { TodayOutlined } from '@material-ui/icons';
+
 
 export const TodoList = ({task,setTask}) => {
 
@@ -12,74 +19,79 @@ export const TodoList = ({task,setTask}) => {
     // スケジュールデータを取得
     let todoList = GetSchedule();
 
-    /**
-     * スケジュールから日付がNullのデータを取得する
-     * (todoでは日付が入っていないデータを表示する)
-     * @param array value  
-     * @returns array value 
-     */
-    function todos(value) {
-        if(value.sch_date == null){
-            return value;
-        }
-    }
-
-    /**
-     * バックエンドから該当のデータを取得
-     * @param int id TodoのID 
-     * @return void
-     */
-    const getEditTask = (id) => {
-        axios
-            .post('/api/edit', {
-                id:id
-            })
-            .then(response => {
-                setEditTask({
-                    id:response.data.id,
-                    sch_category:response.data.sch_category,
-                    sch_contents:response.data.sch_contents,
-                    // sch_memo:response.data.sch_memo,
-                    sch_date:response.data.sch_date,
-                    sch_hour:response.data.sch_time.substr(0,2),
-                    sch_min:response.data.sch_time.substr(3,2),
-                    sch_end_hour:response.data.sch_end_time.substr(0,2),
-                    sch_end_min:response.data.sch_end_time.substr(3,2)
-                });
-            })
-            .catch(() => {
-                console.log('通信に失敗しました');
-            });
-        }   
-
         //  データの削除
-        const deleteTodo = async(sch_id) =>{
-            await axios
-                .post('api/delete',{
-                    id:sch_id
+        // const deleteTodo = (sch_id) =>{
+        //     axios
+        //         .post('api/delete',{
+        //             id:sch_id
+        //         })
+        //         .then((response)=>{
+        //             console.log(response);
+        //             return true;
+        //         })
+        //         .catch(error=>{
+        //             console.log(error);
+        //         });
+        // }
+
+    // 更新用ダイヤログ開閉機能
+        const [ editOpen, setEditOpen ] = useState(false);
+        const editHandleClickOpen = (e) =>{
+            e.stopPropagation();
+            setEditOpen(true);
+            getEditData(e);
+
+        };
+        const editHandleClose = () =>{ setEditOpen(false); }
+
+        //更新用データ配列
+        const [ editData, setEditData ] = useState({id:'',sch_category:'',sch_contents:'',sch_status:'', sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''});
+
+        // バックエンドから該当のデータを取得
+        function getEditData(e){
+            axios
+                .post('/api/edit', {
+                    id: e.currentTarget.id
                 })
-                .then((response)=>{
-                    console.log(response);
-                    return true;
+                .then(response => {
+                    setEditData({
+                        id:response.data.id,
+                        sch_contents:response.data.sch_contents,
+                        sch_category:response.data.sch_category,
+                        sch_status:response.data.sch_status,
+                        // sch_memo:response.data.sch_memo,
+                        sch_date:response.data.sch_date,
+                        sch_hour:response.data.sch_time.substr(0,2),
+                        sch_min:response.data.sch_time.substr(3,2),
+                        sch_end_hour:response.data.sch_end_time.substr(0,2),
+                        sch_end_min:response.data.sch_end_time.substr(3,2)
+                    });
                 })
-                .catch(error=>{
-                    console.log(error);
+                .catch(() => {
+                    console.log('通信に失敗しました');
                 });
         }
-        
+
     return (
         <div className="todoList">
                 {todoList.filter(todos).map((todo,index) => (
-                    <div className="todoGroup" key={index}  id={todo.sch_id}  >
+                    <div className="todoGroup" key={index}  id={todo.sch_id}>
+                        <label className="my-checkbox" >
                             <input type= "checkbox"  name="checkbox"/>
-                            <div className="todoText" >{todo.sch_contents}</div>
-                    <div className="icons">
-                        {/* <button onClick={() => editTodo(todo.sch_id)}></button> */}
-                        <button className="del-btn" href="/dashboard" onClick={()=>deleteTodo(todo.sch_id)} >×</button>
-                        {/* <button id={todo.sch_id} onClick={() => deleteTask(editTask)}>×</button> */}
-                    </div>
+                            <span className="checkmark"></span>
+                            <div className="todoText">{todo.sch_contents}</div>
+                        </label>
+                        <div className="icons">    
+                            <button className="edit-btn"  id={todo.sch_id} onClick={editHandleClickOpen}>
+                                <EditIcon />
+                            </button>
+                            {/* <button className="del-btn" onClick={()=>deleteTodo(todo.sch_id)} >
+                                <CloseIcon />
+                            </button> */}
+                        </div>
                     </div>
                 ))}
+            <UpdateForm open={editOpen} onClose={editHandleClose} editData = {editData} setEditData = {setEditData} />
         </div>
     )
 

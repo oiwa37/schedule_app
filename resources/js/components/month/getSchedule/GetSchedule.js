@@ -34,6 +34,7 @@ function GetSchedule(){
             sch_id:schedule.id,
             sch_category:schedule.sch_category,
             sch_contents:schedule.sch_contents,
+            sch_status:schedule.sch_status,
             // sch_memo:schedule.sch_memo,
             sch_date:schedule.sch_date,
             sch_time:schedule.sch_time,

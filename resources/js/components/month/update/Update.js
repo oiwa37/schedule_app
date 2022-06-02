@@ -18,6 +18,7 @@ function Update(props){
         id: editData.id,
         sch_category:editData.sch_category,
         sch_contents:editData.sch_contents,
+        sch_status:editData.sch_status,
         // sch_memo:editData.sch_memo,
         sch_date:editData.sch_date,
         sch_time:editData.sch_hour + ':' + editData.sch_min,

@@ -17,6 +17,7 @@ function Register(props){
             .post('/api/posts/create',{
                 sch_category:formData.sch_category,
                 sch_contents:formData.sch_contents,
+                sch_status:formData.sch_status,
                 // sch_memo:formData.sch_memo,
                 sch_date:formData.sch_date,
                 sch_time:formData.sch_hour + ':' + formData.sch_min,
