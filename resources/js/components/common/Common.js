@@ -17,3 +17,13 @@ export function zeroPadding(num){
   }
 }
 
+export function sliceTime(value){
+  const newValue = value.slice(0, 5);
+  return  newValue.replace(/^0+/, '');
+}
+
+export function sliceValue(value){
+  const newValue = value.slice(0, 2);
+  return  newValue.replace(/^0+/, '');
+}
+

@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { zeroPadding } from '../common/Common';
 import { DayHeader } from './dayHeader/DayHeader';
 import GetSchedule from '../month/getSchedule/GetSchedule';
-
+import { sliceTime } from '../common/Common';
+import { sliceValue } from '../common/Common';
 
 export const Day = (props) => {
 
@@ -20,6 +21,7 @@ export const Day = (props) => {
     let startTime = 6;
     let endTime = 18;
     let x = 10000;
+    let y = 20000;
     for(let i = startTime; i <= endTime; i++  ) {
         timeTable.push(i);
     }
@@ -36,32 +38,34 @@ export const Day = (props) => {
     let rows = GetSchedule();
     //↓のため、カレンダークリックで出てくる入力フォームをカレンダー上部にボタン設置に変更
 
-    //前準備 日付部分の表示(初期値＝今日、カレンダーの日付選択で、日付が変わるようにする)
-    // ①日付があったデータを取得
-    // ②時間の枠＝予定の時間で取得し、表示
 
 
-
-    useEffect(()=>{
-        console.log(daySchedule);
-        rows.filter(filterDate).map((schVal,schIndex) =>
-        console.log(schVal)
-        )
-    }
-        ,[daySchedule])
+    // useEffect(()=>{
+    //     console.log(daySchedule);
+    //     rows.filter(filterDate).map((schVal,schIndex) =>
+    //         console.log(schVal)
+    //     )
+    // }
+    //     ,[daySchedule])
 
         //タイムテーブルにデータベースから取得したデータをフィルタリングして表示する
         //daySchedule =  カレンダーでクリックした日付データ ex)20220610
-        const showSch = () =>{
 
-        }
-
-        function filterDate(val){
-            if(val.sch_date == daySchedule){
-                return val;
+        //カレンダーの日付と同じ日付のデータのみにフィルタリング
+        function filterDate(dateVal){
+            if(dateVal.sch_date == daySchedule){
+                return dateVal;
             } 
         }
 
+        // //追加する子要素を作成
+        // const newElement = document.createElement("div");
+        // const newContent = document.createTextNode("ここに予定タイトル");
+        // newElement.appendChild(newContent); //div要素にテキストを追加
+        // newElement.setAttribute('id', 'contentId');
+
+        // const parentDiv = document.getElementById('time-contents');
+        // parentDiv.insertBefore(newElement, parentDiv.firstChild);
 
 
 
@@ -73,8 +77,15 @@ export const Day = (props) => {
                     <tbody>
                             {timeTable.map((value,i)=>(
                             <tr key={i + x}>
-                                <td className="time-tag">{value}:00</td>
-                                <td className="time-content" id="time-contents"></td>
+                                <td className="time-tag" id="time-tag">{value}:00</td>
+
+                                <td className="time-content" id="time-contents" >
+                                {rows.filter(filterDate).map((schVal,schIndex) =>(
+                                sliceValue(schVal.sch_time) == value &&
+                                <div className='kari' key ={schIndex + y}>
+                                    <span>{sliceTime(schVal.sch_time)} - {sliceTime(schVal.sch_end_time)}</span>{schVal.sch_contents}</div>
+                                ))}
+                                </td>
                             </tr>
                             ))} 
                     </tbody>
