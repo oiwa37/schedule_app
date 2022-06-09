@@ -5,17 +5,24 @@ import { Day } from './day/Day';
 import Month from './month/Month';
 import { Header } from './common/Header'
 import { Footer } from './common/Footer';
+import { zeroPadding } from './common/Common';
 
 
 function Example(){
+    const [ year, setYear ] = useState(new Date().getFullYear())  //年(4桁)
+    const [ month, setMonth ] = useState(new Date().getMonth()+1) //0~11のため+1
+    const [ date, setDate ] =useState(new Date().getDate()); //日付
+    const [ currentDate, setCurrentDate ] = useState( month + '月' + date + '日') //今日の月日 ○月○日
+    const [ daySchedule, setDaySchedule ] = useState(year + '-' + zeroPadding(month) + '-' + zeroPadding(date)
+    ); //2022-06-09表記の日付
 
     return (
         <Fragment>
             <Header />
             <div className="body">
                 <Todo />
-                <Day />
-                <Month />
+                <Day currentDate={currentDate} setCurrentDate={setCurrentDate} daySchedule={daySchedule} setDaySchedule={setDaySchedule} />
+                <Month currentDate={currentDate} setCurrentDate={setCurrentDate} daySchedule={daySchedule} setDaySchedule={setDaySchedule}/>
             </div>
             <Footer />
         </Fragment>

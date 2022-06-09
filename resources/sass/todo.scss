@@ -17,7 +17,8 @@ button{
 
 .todo{
   width:20%;
-  background-color: rgb(240, 246, 246);
+  height: auto;
+  background-color:#e8f0f4;
   h1{
     margin:2rem auto;
     text-align: center;
@@ -33,7 +34,7 @@ button{
       .input-form{
         // width:60%;
         height: 30px;
-        border: solid 1px rgb(105, 105, 120);
+        border: solid 1px rgb(144, 144, 158);
       }
       .btn{
         padding:0;
@@ -57,7 +58,7 @@ button{
   margin :30px 10px;
 }
 .todoGroup{
-  margin:4px 4px 8px 4px ;
+  margin:4px 4px 6px 4px ;
   height: 2.3rem;
   // display: flex;
   // flex-direction: row;

@@ -16,13 +16,6 @@ class ScheduleController extends Controller {
         return response()->json($schedules); 
     }
 
-  //スケジュールの一覧を取得
-    // public function todoindex(Request $request){ 
-    //     $todos = Schedule::select('*');
-    //     $todos->whereNull('sch_date');
-    //     return response()->json($todos); 
-    // }
-
 
     //スケジュールの登録処理
     public function create(Request $request){
@@ -66,5 +59,11 @@ class ScheduleController extends Controller {
         $schedule->delete();
         $schedules = Schedule::all();
         return $schedules;
+    }
+
+    //該当の日付のデータを取得
+    public function dateTable(){
+        $schedules = Schedule::where('sch_date', '=', 'dbDate')->get();
+        return response()->json($schedules); 
     }
 }

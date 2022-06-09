@@ -7,7 +7,7 @@ li{
   width:50%;
   // margin:0 auto;
   // float:right;
-  background-color: rgb(240, 246, 246);;
+  background-color:  #f1f3f8;
 }
 
 .calender-header{
@@ -17,6 +17,19 @@ li{
   margin:2rem auto 1rem auto;
   h1{
     font-size:2rem;
+  }
+  .register-form{
+    width:150px;
+    height:auto;
+    padding-top:11px;
+    cursor: pointer;
+    text-align: center;
+    background-color:#6687d5;
+    color: #fff;
+    border-radius: 3px;
+    &:hover{
+      background-color: #8c9cc1;
+    }
   }
   .calender-nav{
     display: flex;
@@ -31,8 +44,9 @@ li{
 }
 
 .calender-table{
-  width:90%;
+  width:93%;
   margin:0 auto;
+  margin-bottom: 20px;
   text-align: left;
   thead{
     text-align: center;
@@ -42,7 +56,7 @@ li{
   }
   tbody tr{
     td:hover{
-      background-color: silver;
+      background-color:  #f7fafc;
     }
     td{
       border:1px solid silver;
@@ -58,10 +72,11 @@ li{
         font-size: 0.8rem;
       }
       .schedule-area{
-        height:5rem;
+        height:4.9rem;
         .schedule-title{
+          cursor: pointer;
           color:#fff;
-          background-color: #3788D8;
+          background-color: #6687d5;
           font-size: 0.8rem;
           border-radius: 3px;
           padding-left:0.2rem;
@@ -75,7 +90,7 @@ li{
   }
 
   .disable{
-    color: rgb(137, 137, 137);
+    color: rgb(163, 162, 162);
 
   }
 }
