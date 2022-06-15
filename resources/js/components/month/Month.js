@@ -16,7 +16,7 @@ function Month(props){
     const [month,setMonth] = useState(new Date().getMonth()+1) //0~11のため+1
     const last = new Date(year,month,0).getDate()  //第三引数0は最終日を取得 (当月)
     const prevlast = new Date(year,month-1,0).getDate() //先月の最終日を取得
-    const calendar = createCalender(year,month) 
+    const calendar = createCalendar(year,month) 
 
     // 登録済みのスケジュールデータを取得
     let rows = GetSchedule();
@@ -235,7 +235,7 @@ function Month(props){
     );
 }
 
-function createCalender(year,month){
+function createCalendar(year,month){
     const first = new Date(year,month - 1,1).getDay()
 
     return [0,1,2,3,4,5].map((weekIndex) => {

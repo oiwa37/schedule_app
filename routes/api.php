@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +23,30 @@ use Illuminate\Support\Facades\Route;
 // 追加
 Route::group(['middleware'=>'api'],function(){
   Route::post('posts','App\Http\Controllers\Api\ScheduleController@scheduleindex');
-  // Route::post('posts','App\Http\Controllers\Api\ScheduleController@todoindex');
   Route::post('posts/create','App\Http\Controllers\Api\ScheduleController@create');
   Route::post('edit','App\Http\Controllers\Api\ScheduleController@edit');
   Route::post('update','App\Http\Controllers\Api\ScheduleController@update');
   Route::post('delete','App\Http\Controllers\Api\ScheduleController@delete');
   Route::post('date','App\Http\Controllers\Api\ScheduleController@dateTable');
 });
+
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+  return $request->user();
+});
+//ログイン機能追加 (認証前OK)
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+//認証済みでないと許可しない
+Route::middleware('auth:sanctum')->group(function() {
+  Route::post('logout', [AuthController::class, 'logout']);
+
+
+
+
+});
+
+
+
+

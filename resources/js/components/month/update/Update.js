@@ -33,7 +33,7 @@ function Update(props){
       }
   
       return (
-          <Button href="/dashboard" onClick={updateSchedule}>Subscribe</Button>
+          <Button href="/" onClick={updateSchedule}>Subscribe</Button>
       );
 }
 

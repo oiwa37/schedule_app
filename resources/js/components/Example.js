@@ -6,6 +6,7 @@ import Month from './month/Month';
 import { Header } from './common/Header'
 import { Footer } from './common/Footer';
 import { zeroPadding } from './common/Common';
+import { main } from '@popperjs/core';
 
 
 function Example(){
@@ -16,14 +17,30 @@ function Example(){
     const [ daySchedule, setDaySchedule ] = useState(year + '-' + zeroPadding(month) + '-' + zeroPadding(date)
     ); //2022-06-09表記の日付
 
+
+
+
+    let main= '';
+    if (!localStorage.getItem('auth_token')){
+        main = (
+            <div>ログインしてください</div>
+    );
+    } else {
+    main = (
+        <div className="body">
+            <Todo />
+            <Day currentDate={currentDate} setCurrentDate={setCurrentDate} daySchedule={daySchedule} setDaySchedule={setDaySchedule} />
+            <Month currentDate={currentDate} setCurrentDate={setCurrentDate} daySchedule={daySchedule} setDaySchedule={setDaySchedule}/>
+        </div>
+    );
+    }
+
+
     return (
         <Fragment>
-            <Header />
-            <div className="body">
-                <Todo />
-                <Day currentDate={currentDate} setCurrentDate={setCurrentDate} daySchedule={daySchedule} setDaySchedule={setDaySchedule} />
-                <Month currentDate={currentDate} setCurrentDate={setCurrentDate} daySchedule={daySchedule} setDaySchedule={setDaySchedule}/>
-            </div>
+            <div className='main-content'>
+                {main}
+            </div>            
             <Footer />
         </Fragment>
     );
@@ -31,6 +48,6 @@ function Example(){
 
 export default Example;
 
-if (document.getElementById('app')) {
-    ReactDOM.render(<Example />, document.getElementById('app'));
-}
+// if (document.getElementById('app')) {
+//     ReactDOM.render(<Example />, document.getElementById('app'));
+// }

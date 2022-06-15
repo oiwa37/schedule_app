@@ -24,11 +24,12 @@ li{
     padding-top:11px;
     cursor: pointer;
     text-align: center;
-    background-color:#6687d5;
+    background-color:#7b89a9;
     color: #fff;
     border-radius: 3px;
+    cursor: pointer;
     &:hover{
-      background-color: #8c9cc1;
+      background-color: #6687d5;
     }
   }
   .calender-nav{
@@ -36,9 +37,11 @@ li{
     justify-content: end;
     font-size:1.5rem;
     button{
+      line-height: normal;
       border: none;
       background-color: transparent;
       margin-left:1rem;
+
     }
   }
 }

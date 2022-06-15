@@ -16,6 +16,11 @@
 //Day Schedule
 @import 'day';
 
+//google fonts
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Varela+Round&display=swap');
+// font-family: 'Varela Round', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+// font-family: 'Ubuntu', sans-serif;
 
 .body{
     display: flex;
@@ -23,16 +28,233 @@
 
 .header{
     height: 50px;
+    width: 100%;
+    // background-color: #585c7e;
+    background-color: rgb(229, 231, 237);
+    font-family: 'Varela Round', sans-serif;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.05);
     .header-title{
-        color: rgb(161, 161, 162);
-        font-size: 1rem;
+        color: #373e71;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+        font-size: 1.2rem;
+        line-height: 50px;
+        float: left;
+        margin-left: 100px;
+        font-weight: bold;
     }
 //   border-bottom: 1px solid silver;
 }
 
+.main-content{
+    margin-top:50px;
+    height: 95vh;
+    width: 100%;
+
+}
+
+
+
+
+
+
+
+//ボタン
+.global-nav{
+    ul{
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 100px;
+        li{
+            font-size:1.05rem ;
+            margin-right: 15px;
+            line-height: 50px;
+            .register-btn{
+                color: #fff;
+                background-color:#4179e9;
+                border-radius: 4px;
+                padding: 7px 10px;
+                transition: .2s ;
+                &:hover{
+                    background-color: #42ab7f;
+                    }
+            }
+            .login-btn{
+                padding: 7px 10px;
+                border-radius: 4px;
+                color: #373e71;
+                transition: .2s ;
+                &:hover{
+                background-color:rgba(120, 162, 204, 0.3);
+                }
+            }
+        }
+    }
+    .logout-btn{
+        color: #373e71;
+        padding: 7px 10px;
+        float: right;
+        margin-right:100px;
+        // padding: 7px 10px;
+        transition: .2s ;
+        border-radius: 4px;
+        margin-top: 7px;
+        &:hover{
+            background-color:rgba(120, 162, 204, 0.3);
+            }
+    }
+    
+}
+
+
+//topページのボタン
+.button ul{
+    font-family: 'Varela Round', sans-serif;
+    display: flex;
+    justify-content: center;
+    margin:40px auto;
+    text-decoration: none;
+
+    li{
+        font-size: 1.5rem;
+        // margin-right: 15px;
+        background-color:#4179e9;
+        border-radius: 10px;
+        padding: 10px 20px ;
+        transition: .2s ;
+        span{
+            color: #fff;
+        }
+        &:hover{
+        background-color: #42ab7f;
+        }
+    }
+}
+
+
+
+
+// topページ
+.top-content{
+    width: 100%;
+    margin:50px auto 0 auto;
+    height: 800px;
+    background-color: #fff;
+    .top-group{
+        width: 80%;
+        padding-top:80px;
+        margin: 0 auto;
+        display: flex;
+        font-family: 'Ubuntu', sans-serif;
+            .top-text{
+            // height: 35%;
+            width:55%;
+            // font-family: 'PT Sans', sans-serif;
+            // font-family: 'Varela Round', sans-serif;
+            // width:60%;
+            h1{
+                padding-top: 100px;
+                color:#373e71;
+                font-size: 80px;
+                text-align: center;
+                text-shadow: 4px 4px 0 rgba(172, 173, 174, 0.3);
+                font-weight: bold;
+                line-height: normal;
+                span{
+                    color: #42ab7f;
+                }
+            }
+            p{
+                color: #373e71;
+                margin-top: 50px;
+                margin-bottom: 50px;
+                text-align: center;
+                font-size: 1.1rem;
+            }
+            
+        }
+        img{
+            display: block;
+            // margin: 40px auto 0 auto;
+            width:600px;
+            height: 450px;
+            margin-top: 80px;
+        }
+    }
+}
+
+
+
+
+
+.middle-content{
+    width: 100%;
+    margin:0 auto;
+    height: auto;
+    background-color: rgb(222, 255, 196);
+    .top-des{
+        background-color:#f7fafc;
+        height: 800px;
+        width: 100%;
+        margin:0 auto;
+        h3{
+            padding-top:50px;
+            width: 100%;
+            text-align: center;
+        }
+        img{
+            display: block;
+            width: 55%;
+            margin:0 auto ;
+        }
+    }
+    .middle-des{
+        background-color:#fff;
+        height: 600px;
+        width: 100%;
+        margin:0 auto;
+        h3{
+            padding-top:50px;
+            width: 100%;
+            text-align: center;
+        }
+        img{
+            height: 200px;
+            display: block;
+            margin:0 auto ;
+        }        
+    }
+}
+
+
+.bottom-content{
+    width: 100%;
+    margin:0 auto;
+    height: 300px;
+    background-color: #f7fafc;
+    .bottom-text{
+        margin-top:100px ;
+        text-align: center;
+    }
+}
+
+
+
+.card{
+    position: relative;
+    top: 100px;
+
+}
+
+
+
 .footer{
     width:100%;
     height: 40px;  
+    margin-top:50px;
     background-color: rgb(229, 231, 237);
     text-align: center;
     // border-bottom: 1px solid silver;
@@ -41,4 +263,5 @@
         padding-top: 9px;
     }
 }
+
 

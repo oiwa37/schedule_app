@@ -2,7 +2,7 @@ import axios from 'axios';
 import { set } from 'lodash';
 import React,{ Fragment, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import GetSchedule from '../month/getSchedule/getSchedule';
+import GetSchedule from '../month/getSchedule/GetSchedule';
 import UpdateForm from '../month/update/updateForm';
 import { todos } from '../common/Common';
 import { zeroPadding } from '../common/Common';

@@ -35,7 +35,7 @@ function Register(props){
             })
     }
     return (
-        <Button href="/dashboard" onClick={createSchedule}>Subscribe</Button>
+        <Button href="/" onClick={createSchedule}>Subscribe</Button>
     );
 }
 
