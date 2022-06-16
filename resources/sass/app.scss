@@ -51,7 +51,7 @@
 
 .main-content{
     margin-top:50px;
-    height: 95vh;
+    height: auto;
     width: 100%;
 
 }
@@ -100,6 +100,7 @@
         margin-right:100px;
         // padding: 7px 10px;
         transition: .2s ;
+        cursor: pointer;
         border-radius: 4px;
         margin-top: 7px;
         &:hover{
