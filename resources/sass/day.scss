@@ -9,41 +9,81 @@ li{
   background-color:  #f7fafc;
   .day-header{
     h1{
-      margin:1.55rem auto;
+      margin:1.7rem auto;
       text-align: center;
     }
   }
+
+
   .time-table{
-    width:93%;
-    height: 88%;
-    margin: 0 auto; 
-    table-layout: fixed;
-    table {
-      width:100%;
-      height: 100%;
-      tbody{
-        width:95%;
-        height: 88%;
-        tr .time-tag{
+    // background-color: bisque;
+    width: 96%;
+    height: 780px;
+    margin: 0 auto;
+    overflow-y:scroll;
+    
+    .tag-tables{
+      float: left;
+      display: flex;
+      flex-direction: column;
+      width: 13%;
+      .time-tag{
+        text-align: center;
+        // width: 97%;
+        // position: absolute;
+      }
+    }
+    .content-tables{
+      display: flex;
+      flex-direction: column;
+      width:87%;
+      .time-content{
+        border-top: 1px solid rgb(196, 203, 213);
+        border-right: 1px solid rgb(196, 203, 213);
+        border-left: 1px solid rgb(196, 203, 213);
+        .content-detail{
+          background-color:rgb(196, 203, 213);
           text-align: center;
-          width:12%;
-          font-size: 1rem;
-          position: relative;
-          bottom:22px;
-          color: rgb(63, 66, 69);
-        }
-        tr .time-content{
-          text-align: center;
-          width:80%;
-          background-color:  #f7fafc;
-          border: 1px solid rgb(216, 216, 216);
-        }
-        tr .content-detail{
-          background-color: rgb(205, 207, 218);
-          width :100%;
-          height:100%;
+          border-top:solid 0.5px #FFF;
+          // color: black;
         }
       }
     }
   }
+  
+
+
+  // .time-table{
+  //   width:93%;
+  //   height: 88%;
+  //   margin: 0 auto; 
+  //   table-layout: fixed;
+  //   table {
+  //     width:100%;
+  //     height: 100%;
+  //     tbody{
+  //       width:95%;
+  //       height: 88%;
+  //       tr .time-tag{
+  //         text-align: center;
+  //         width:12%;
+  //         font-size: 1rem;
+  //         position: relative;
+  //         bottom:22px;
+  //         color: rgb(63, 66, 69);
+  //       }
+  //       tr .time-content{
+  //         text-align: center;
+  //         width:80%;
+  //         background-color: #f7fafc;
+  //         border: 1px solid rgb(216, 216, 216);
+  //       }
+  //       tr .content-detail{
+  //         background-color: rgb(205, 207, 218);
+  //         width :100%;
+  //         height:100%;
+  //       }
+  //     }
+  //   }
+  // }
 }

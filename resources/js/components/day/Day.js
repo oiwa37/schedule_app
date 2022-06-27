@@ -1,89 +1,113 @@
-import React,{ Fragment, useState, useEffect  } from 'react';
-import ReactDOM from 'react-dom';
-import { zeroPadding } from '../common/Common';
+import React,{ useEffect } from 'react';
+import { sliceTime, sliceValue } from '../common/Common';
+import moment from 'moment';
+import 'moment/locale/ja';
 import { DayHeader } from './dayHeader/DayHeader';
-import GetSchedule from '../month/getSchedule/GetSchedule';
-import { sliceTime } from '../common/Common';
-import { sliceValue } from '../common/Common';
 
 export const Day = (props) => {
+    const { currentDate, setCurrentDate, daySchedule, setDaySchedule, days, setDays } = props;
+    const userId = localStorage.getItem('auth_id'); //ユーザーID
 
-    const { currentDate, setCurrentDate, daySchedule, setDaySchedule } = props;
-
-    const [ year, setYear ] = useState(new Date().getFullYear())  //年(4桁)
-    const [ month, setMonth ] = useState(new Date().getMonth()+1) //0~11のため+1
-    const [ date, setDate ] =useState(new Date().getDate());
-
-
-    //タイムテーブルを作る
-    let timeTable = [];
-    //開始・終了時間は後で、useStateでユーザーの設定値を取得させる
-    let startTime = 6; //default
-    let endTime = 18; //default
-    let x = 10000;
-    let y = 20000;
-    for(let i = startTime; i <= endTime; i++  ) {
-        timeTable.push(i);
+    //DBから該当の日付のデータを取得(各ユーザーの)
+    const getDateData = () =>{
+        axios
+            .post('/api/date',{
+                date:days,
+                id:userId
+            })
+            .then(response=>{
+                setDaySchedule(response.data); //データをセット
+                console.log(response.data); 
+            }).catch(()=>{
+                console.log('通信に失敗しました');
+            });
     }
 
-    // let timeTable = {};
-    // let x = 10000;
-    // for(let i = startTime; i <= endTime; i++  ) {
-    //     timeTable.id = i + x ;
-    //     timeTable.value = i ;
-    //     console.log(timeTable);
-    // }
+    //currentDate(日付)が変わるタイミングでデータ取得
+    useEffect(()=>{
+        getDateData();
+    },[currentDate])
+    
+    //案2）タイムテーブル用
+    const base_time = moment(days); //テーブルの開始時刻
+    let block_size = 55;  //1時間の縦幅
+    let block_number = 0; //開始時刻を0として連番をつける
 
-    // 登録済みのスケジュールデータを取得
-    let rows = GetSchedule();
+    const times = []; //時刻とblock_number格納用の配列
+    for(let i = 0; i < 24; i++ ){
+        times.push({
+            time: base_time.format('HH:mm'),
+            block_number
+        })
+        base_time.add(1,'hours');
+        block_number++;
+    }
 
-        //カレンダーの日付と同じ日付のデータのみにフィルタリング
-        function filterDate(dateVal){
-            if(dateVal.sch_date == daySchedule){
-                return dateVal;
-            } 
+    let style = {}; //CSSスタイル用配列
+    //日付が変わったタイミングで入っている予定をリセット 
+    useEffect(()=>{removeChildren();},[currentDate])
+    const removeChildren = () =>{
+        const ele = document.getElementsByClassName('time-content');
+        const childEle = document.querySelectorAll('.time-content *');
+        console.log(ele);
+        console.log(childEle);
+        for(let i=0; i < childEle.length; i++){
+            childEle[i].remove();
         }
-
-
-
-        const ex = () =>{
-            const date1 = new Date('2022-06-10 10:00:00');
-            const date2 = new Date('2022-06-10 12:00:00');
-            
-            const diff = date2.getTime() - date1.getTime();
-            console.log(Math.abs(diff) / (60*60*1000));
-            
-        }
-
-
-
-
-
+    }
 
     return (
         <div className="day">
-            <DayHeader currentDate={currentDate} setCurrentDate={setCurrentDate} month={month} date={date}/>
-            <div className="time-table">
-                <table>
-                    <tbody>
-                            {timeTable.map((value,i)=>(
-                            <tr key={i + x}>
-                                <td className="time-tag" id="time-tag">{value}:00</td>
+            <DayHeader currentDate={currentDate} />
 
-                                <td className="time-content" id="time-contents" >
-                                {rows.filter(filterDate).map((schVal,schIndex) =>(
-                                sliceValue(schVal.sch_time) == value &&
-                                <div className='content-detail' key ={schIndex + y}>
-                                    <span>{sliceTime(schVal.sch_time)} - {sliceTime(schVal.sch_end_time)}</span>{schVal.sch_contents}</div>
-                                ))}
-                                </td>                               
-                            </tr>
-                            ))} 
-                    </tbody>
-                </table>
+            <div className="time-table" id='time-table'>
+                    <div className='tag-tables'>
+                        { times.map((val,index) => (
+                            <div className="time-tag"   key={index} 
+                            style={{height:`${block_size}px`, top:`${val.block_number} * ${block_size}`}}>
+                            {val.time}</div>
+                        ))}
+                    </div>
+                    <div className='content-tables' >
+                        { times.map((schVal, schIndex)=>(
+                            <div className="time-content relative" key={schIndex} id={schIndex}
+                            style={{height:`${block_size}px`, top:`${schVal.block_number} * ${block_size}`}}>
+                                    
+                                    { daySchedule.map((dayVal, dayIndex)=>{
+                                        let schid = schIndex;
+                                        const targetId = document.getElementById(schid); 
+                                        const timeTable = document.getElementById('time-table'); //スクロール表示領域の要素を取得
+                                        timeTable.scrollTop = 330; //スクロール初期位置を設定
+                                        if(schIndex == sliceValue(dayVal.sch_time)){
+                                            const time_from = sliceValue(dayVal.sch_time);
+                                            const time_to = sliceValue(dayVal.sch_end_time);
+                                            const between = Math.abs(time_from - time_to);
+                                            const start = time_from * block_size;
+                                            let style = {
+                                                top:`${start}`,
+                                                height:`${block_size * between}`
+                                            }
+                                            //案1）スケジュールの表示  
+                                            // let newElement = document.createElement('div');
+                                            // let newContent = document.createTextNode(dayVal.sch_contents);
+                                            // newElement.appendChild(newContent);
+                                            // newElement.setAttribute('class', 'content-detail');
+                                            // newElement.setAttribute('style', `height:${block_size * between}px`);
+                                            // targetId.insertBefore(newElement, targetId.firstChild);
+                                            
+                                            //案2）スケジュールの表示 
+                                            const schTime = sliceTime(dayVal.sch_time);
+                                            const schEndTime = sliceTime(dayVal.sch_end_time);
+                                            targetId.innerHTML = `<div class='content-detail' style=height:${block_size * between}px><span>${schTime} - ${schEndTime}</span><p>${dayVal.sch_contents}</p></div>`
+                                        }
+                                    })}
+                            </div>
+                        ))}    
+                    </div>        
             </div>
-
         </div>
     )
 }
+
+
 

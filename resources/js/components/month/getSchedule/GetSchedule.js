@@ -3,10 +3,11 @@ import axios from 'axios';
 
 function GetSchedule(){
 
-    // const userid = props;
     
     //スケジュールのデータ
     const [schedules,setSchedules] = useState([])
+    const userId = localStorage.getItem('auth_id'); //ユーザーID
+
 
     //画面読み込み時に、1度だけ起動
     useEffect(()=>{
@@ -16,10 +17,12 @@ function GetSchedule(){
     //DBからデータ一覧を取得
     const getScheduleData = () =>{
         axios
-            .post('/api/posts')
+            .post('/api/posts',{
+                id : userId
+            })
             .then(response=>{
                 setSchedules(response.data); //データをセット
-                console.log(response.data); 
+                // console.log(response.data); 
             }).catch(()=>{
                 console.log('通信に失敗しました');
             });

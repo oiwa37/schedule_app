@@ -34,6 +34,7 @@ class AuthController extends Controller
                 'status'=>200,
                 'username'=>$user->name,
                 'token'=>$token,
+                'id' =>$user->id,
                 'message'=>'Registerd Successfully'
             ]);
         }

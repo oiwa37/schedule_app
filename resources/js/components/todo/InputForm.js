@@ -1,10 +1,9 @@
-import React,{ Fragment, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 
 export const InputForm = (props) => {
-    const {task,setTask} = props;
-    const[inputText, setInputText] = useState("")
+    const { task, setTask } = props;
+    // const[inputText, setInputText] = useState("")
 
     // タスクを登録処理
     const inputChange = (e) => {
@@ -25,6 +24,7 @@ export const InputForm = (props) => {
         //入力値を渡す
         await axios
             .post('/api/posts/create',{
+                user_id:task.user_id,
                 sch_category:task.sch_category,
                 sch_contents:task.sch_contents,
                 // sch_memo:task.sch_memo,

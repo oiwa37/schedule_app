@@ -15,6 +15,7 @@ function Register(props){
         //入力値を投げる
         await axios
             .post('/api/posts/create',{
+                user_id:formData.user_id,
                 sch_category:formData.sch_category,
                 sch_contents:formData.sch_contents,
                 sch_status:formData.sch_status,

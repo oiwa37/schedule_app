@@ -2,21 +2,26 @@ import React,{ Fragment, useState, useEffect  } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Navigation from './navigation/Navigation';
-import { zeroPadding } from '../common/Common';
+import { zeroPadding, sliceYear } from '../common/Common';
 import RegisterForm from './register/RegisterForm';
 import UpdateForm from './update/updateForm';
 import GetSchedule from './getSchedule/GetSchedule';
-import { SettingsVoiceSharp } from '@material-ui/icons';
 
 
 function Month(props){
-    const { currentDate, setCurrentDate, daySchedule, setDaySchedule } = props;
+    const {currentDate, setCurrentDate, daySchedule, setDaySchedule, days, setDays } = props;
 
     const [year,setYear] = useState(new Date().getFullYear())  //年(4桁)
     const [month,setMonth] = useState(new Date().getMonth()+1) //0~11のため+1
-    const last = new Date(year,month,0).getDate()  //第三引数0は最終日を取得 (当月)
-    const prevlast = new Date(year,month-1,0).getDate() //先月の最終日を取得
+    const last = new Date(year,month,0).getDate()              //第三引数0は最終日を取得 (当月)
+    const prevlast = new Date(year,month-1,0).getDate()        //先月の最終日を取得
     const calendar = createCalendar(year,month) 
+    const WeekChars = [ "(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)" ];
+
+    const username = localStorage.getItem('auth_name');         //ユーザーネーム
+    const userId = localStorage.getItem('auth_id');             //ユーザーID
+
+
 
     // 登録済みのスケジュールデータを取得
     let rows = GetSchedule();
@@ -24,18 +29,12 @@ function Month(props){
     //登録用ダイヤログ開閉処理
     const [ open, setOpen ] = useState(false);
     const handleClickOpen = (e) =>{ 
-        // const thisMonth = document.getElementsByClassName('this-month');
-        // console.log(thisMonth);
-        // const d = e.currentTarget.id
-        // const  md =  + '-' + zeroPadding(day)
-        // console.log(clickday);  日付の取得はできた！
         setOpen(true); 
     };
     const handleClose = () =>{ setOpen(false); };
 
     //新規登録用データ配列
-    const [formData,setFormData] = useState({sch_category:'なし',sch_contents:'',sch_date:'',sch_hour:'00',sch_min:'00',sch_end_hour:'00',sch_end_min:'00'});
-
+    const [formData,setFormData] = useState({user_id:userId,sch_contents:'',sch_date:'',sch_hour:'00',sch_min:'00',sch_end_hour:'00',sch_end_min:'00',sch_category:'なし'});
 
     // 更新用ダイヤログ開閉機能
     const [ editOpen, setEditOpen ] = useState(false);
@@ -47,8 +46,7 @@ function Month(props){
     const editHandleClose = () =>{ setEditOpen(false); }
 
     //更新用データ配列
-    const [ editData, setEditData ] = useState({id:'',sch_category:'',sch_contents:'',sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''});
-
+    const [ editData, setEditData ] = useState({id:'', user_id:userId, sch_category:'',sch_contents:'',sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''});
 
     // バックエンドから該当のデータを取得
     function getEditData(e){
@@ -62,7 +60,7 @@ function Month(props){
                     sch_category:response.data.sch_category,
                     sch_contents:response.data.sch_contents,
                     sch_status:response.data.sch_status,
-                    // sch_memo:response.data.sch_memo,
+                    // sch_memo:response.data.sch_memo, //メモ機能追加時にコメントアウト解除
                     sch_date:response.data.sch_date,
                     sch_hour:response.data.sch_time.substr(0,2),
                     sch_min:response.data.sch_time.substr(3,2),
@@ -80,20 +78,24 @@ function Month(props){
     //カレンダーの日付クリックで該当の日のタイムテーブルを表示
     //クリックイベントで日付を取得し、表示する
     const scheduleOpen = (e) =>{
-        let valDay = e.currentTarget.id;
+        let valDay = e.currentTarget.id; //Idが日付
         const numDay = Number(valDay);
-        const textMsg = document.getElementById('current-month'); 
+        const textMsg = document.getElementById('current-month');  
         const msg = textMsg.textContent; //ex)2022年1月
         const res = msg.replace(/[^0-9]/g, ''); //20221
         const resLength = res.length;
 
-        if(resLength < 6){
-            const a = res.slice(0, 4)
-            const b = '-0'
-            const c = res.slice(4)
-            const resMsg = a + b + c
-            const dbDate = resMsg + '-' + zeroPadding(valDay);
-            const separateMonth = resMsg.slice(-2);
+
+
+        if(resLength < 6){ //一桁の月
+            const a = res.slice(0, 4) //2022
+            const b = '-0' 
+            const c = res.slice(4)  //1 月部分
+            const resMsg = a + b + c //2022-06
+            const dbDate = resMsg + '-' + zeroPadding(valDay); //2022-06-18
+            const separateMonth = resMsg.slice(-2); //月毎に分岐させるため月を取得
+            const checkDay = new Date(dbDate);
+            const week = checkDay.getDay(); //曜日を取得
 
                 switch(separateMonth){
                     case '01':
@@ -103,8 +105,8 @@ function Month(props){
                     case '08':
                         // 31日までの月の場合
                         if (0 < numDay && numDay < 32 ){
-                            setCurrentDate(c  + '月' + numDay  + '日');
-                            setDaySchedule(dbDate);
+                            setCurrentDate(c  + '月' + numDay  + '日' + WeekChars[week]);
+                            setDays(dbDate);
                         } else {
                             console.log('該当の日付なし');
                         }
@@ -114,39 +116,38 @@ function Month(props){
                     case '09':
                         // 30日までの月の場合
                         if (0 < numDay && numDay < 31 ){
-                            setCurrentDate(c  + '月' + numDay  + '日');
-                            setDaySchedule(dbDate);
+                            setCurrentDate(c  + '月' + numDay  + '日' + WeekChars[week]);
+                            setDays(dbDate);
                         } else {
                             console.log('該当の日付なし');
                         }
                     default:
                         // 28日までの月の場合
                         if (0 < numDay && numDay < 29 ){
-                            setCurrentDate(c  + '月' + numDay  + '日');
-                            setDaySchedule(dbDate);
-
+                            setCurrentDate(c  + '月' + numDay  + '日' + WeekChars[week]);
+                            setDays(dbDate);
                         } else {
                             console.log('該当の日付なし');
                         }
                 }
         }else{
+            //二桁の月
             const a = res.slice(0, 4)
             const b = '-'
             const c = res.slice(4)
             const resMsg = a + b + c
             const dbDate = resMsg + '-' + zeroPadding(valDay);
-            console.log(dbDate);
             const separateMonth = resMsg.slice(-2);
-            // getDateTable(dbDate);
+            const checkDay = new Date(dbDate);
+            const week = checkDay.getDay(); //曜日を取得
 
             switch(separateMonth){
                 case '10':
                 case '12':
                     // 31日までの月の場合
                     if (0 < numDay && numDay < 32 ){
-                        setCurrentDate(c  + '月' + numDay  + '日');
-                        setDaySchedule(dbDate);
-
+                            setCurrentDate(c  + '月' + numDay  + '日' + WeekChars[week]);
+                        setDays(dbDate);
                     } else {
                         console.log('該当の日付なし');
                     }
@@ -154,9 +155,8 @@ function Month(props){
                 case '11':  
                     // 30日までの月の場合
                     if (0 < numDay && numDay < 31 ){
-                        setCurrentDate(c  + '月' + numDay  + '日');
-                        setDaySchedule(dbDate);
-
+                            setCurrentDate(c  + '月' + numDay  + '日' + WeekChars[week]);
+                        setDays(dbDate);
                     } else {
                         console.log('該当の日付なし');
                     }
@@ -165,39 +165,8 @@ function Month(props){
                     console.log('なし');
             }
         }
-
-
-
-          //データ格納の空配列を作成
-            let row = [];
-
-                        //該当の日付のデータを取得する
-            // バックエンドから該当のデータを取得
-            function getDateTable (date) {
-                axios
-                    .post('/api/date', {
-                        sch_date: date
-                    })
-                    .then(response =>{
-                        setSchedules(response.data); //データをセット
-                        console.log(response.data); 
-                    }).catch(()=>{
-                        console.log('通信に失敗しました');
-                    });
-            }
-
-        
-            //画面読み込み時に、1度だけ起動
-            // useEffect(()=>{
-            //     getScheduleData();
-            // },[])
-
-
     }
     
-
-
-
 
     return (
         <div className="month">

@@ -35,20 +35,21 @@ export const Top = () => {
                     <img src={Test} />
                 </div>
             </div>
-            <div className='middle-content'>
-                <div className='top-des'>
-                    <h3>gif?でドロップアンドドラッグ操作の紹介</h3>
-                    <img src={TbdImg1} />
-                </div>
-                <div className='middle-des'>
-                    <h3>その他できることや操作方法の紹介</h3>
-                    <img src={TbdImg2} />
-                    <img src={TbdImg3} />
 
+            
+            {/* <div className='middle-content'>
+                <div className='top-des'>
+                    <h3>機能紹介</h3>
                 </div>
-            </div>
-            <div className='bottom-content'>
-                <div className='bottom-text'>適当な文言</div>
+                
+                <div className='middle-des'>
+                    <h3>その他紹介</h3>
+                </div>
+            </div> */}
+
+            
+            {/* <div className='bottom-content'>
+                <div className='bottom-text'></div>
                 <div className='button'>
                     <ul>
                         <li>
@@ -58,7 +59,7 @@ export const Top = () => {
                         </li>
                     </ul>
                 </div>   
-            </div>
+            </div> */}
             
             <Footer />
         </Fragment>

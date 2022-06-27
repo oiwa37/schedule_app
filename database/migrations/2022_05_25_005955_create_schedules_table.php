@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->unsigned(); 
+            //usersテーブルのidカラムにuser_idカラムを関連付ける
+            $table->foreign('user_id')->references('id')->on('users');
             $table->date('sch_date')->nullable();
             $table->time('sch_time')->nullable();
             $table->time('sch_end_time')->nullable();

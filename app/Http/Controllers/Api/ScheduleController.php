@@ -11,8 +11,10 @@ class ScheduleController extends Controller {
 
   //スケジュールの一覧を取得
     public function scheduleindex(Request $request){ 
-        $schedules = Schedule::all(); 
-
+        
+        // $schedules = Schedule::all();  全データ取得から
+        //ここを個々のユーザのデータ取得に変える
+        $schedules = Schedule::where('user_id','=', $request->id)->get(); 
         return response()->json($schedules); 
     }
 
@@ -20,6 +22,7 @@ class ScheduleController extends Controller {
     //スケジュールの登録処理
     public function create(Request $request){
         $schedules = new Schedule;
+        $schedules->user_id = $request->user_id;
         $schedules->sch_date = $request->sch_date;
         $schedules->sch_time = $request->sch_time;
         $schedules->sch_end_time = $request->sch_end_time;
@@ -62,8 +65,9 @@ class ScheduleController extends Controller {
     }
 
     //該当の日付のデータを取得
-    public function dateTable(){
-        $schedules = Schedule::where('sch_date', '=', 'dbDate')->get();
+    public function dateTable(Request $request){
+        $schedules = Schedule::where('sch_date', '=', $request->date)
+                                ->where('user_id','=', $request->id)->get();
         return response()->json($schedules); 
     }
 }

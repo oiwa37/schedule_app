@@ -2,7 +2,7 @@ import React,{ Fragment, useState, useEffect  } from 'react';
 
 export const DayHeader = (props) => {
     
-    const { currentDate, setCurrentDate, month, date } = props;
+    const { currentDate } = props;
 
 
     //todoと同じで全データ取得後にフィルターをかける？

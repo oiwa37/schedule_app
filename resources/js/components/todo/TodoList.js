@@ -6,12 +6,13 @@ import GetSchedule from '../month/getSchedule/GetSchedule';
 import UpdateForm from '../month/update/updateForm';
 import { todos } from '../common/Common';
 import { zeroPadding } from '../common/Common';
-// import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import { TodayOutlined } from '@material-ui/icons';
 
 
 export const TodoList = ({task,setTask}) => {
+
+    const userId = localStorage.getItem('auth_id'); //ユーザーID
 
     //データの編集用
     const [editTask, setEditTask] = useState({id:'',sch_category:'',sch_contents:'',sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''})
@@ -40,7 +41,6 @@ export const TodoList = ({task,setTask}) => {
             e.stopPropagation();
             setEditOpen(true);
             getEditData(e);
-
         };
         const editHandleClose = () =>{ setEditOpen(false); }
 
@@ -72,12 +72,14 @@ export const TodoList = ({task,setTask}) => {
                 });
         }
 
+        const todoIndex = 30000;
+
     return (
         <div className="todoList">
                 {todoList.filter(todos).map((todo,index) => (
-                    <div className="todoGroup" key={index}  id={todo.sch_id}>
+                    <div className="todoGroup" key={todoIndex + index}  id={todo.sch_id}>
                         <label className="my-checkbox" >
-                            <input type= "checkbox"  name="checkbox"/>
+                            <input type= "checkbox"  name="checkbox" />
                             <span className="checkmark"></span>
                             <div className="todoText">{todo.sch_contents}</div>
                         </label>
