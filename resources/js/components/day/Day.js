@@ -1,15 +1,54 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect, useState } from 'react';
 import { sliceTime, sliceValue } from '../common/Common';
 import moment from 'moment';
 import 'moment/locale/ja';
 import { DayHeader } from './dayHeader/DayHeader';
+import UpdateForm from '../month/update/updateForm';
 
 export const Day = (props) => {
     const { currentDate, setCurrentDate, daySchedule, setDaySchedule, days, setDays } = props;
     const userId = localStorage.getItem('auth_id'); //ユーザーID
 
+    // 更新用ダイヤログ開閉機能
+    const [ editOpen, setEditOpen ] = useState(false);
+    //クリックイベント
+    const editHandleClickOpen = (e) =>{
+        e.stopPropagation();
+        setEditOpen(true);
+        getEditData(e);
+    };
+    const editHandleClose = () =>{ setEditOpen(false); }
+    //更新用データ配列
+    const [ editData, setEditData ] = useState({id:'', user_id:userId, sch_category:'',sch_contents:'',sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''});
+
+
+    // バックエンドから該当のデータを取得
+    function getEditData(e){
+        axios
+            .post('/api/edit', {
+                id: e.currentTarget.id - 40000
+            })
+            .then(response => {
+                setEditData({
+                    id:response.data.id,
+                    sch_category:response.data.sch_category,
+                    sch_contents:response.data.sch_contents,
+                    sch_status:response.data.sch_status,
+                    // sch_memo:response.data.sch_memo, //メモ機能追加時にコメントアウト解除
+                    sch_date:response.data.sch_date,
+                    sch_hour:response.data.sch_time.substr(0,2),
+                    sch_min:response.data.sch_time.substr(3,2),
+                    sch_end_hour:response.data.sch_end_time.substr(0,2),
+                    sch_end_min:response.data.sch_end_time.substr(3,2)
+                });
+            })
+            .catch(() => {
+                console.log('通信に失敗しました');
+            });
+    }
+    
     //DBから該当の日付のデータを取得(各ユーザーの)
-    const getDateData = () =>{
+    const getDateData = (e) =>{
         axios
             .post('/api/date',{
                 date:days,
@@ -56,6 +95,9 @@ export const Day = (props) => {
         }
     }
 
+
+
+
     return (
         <div className="day">
             <DayHeader currentDate={currentDate} />
@@ -86,7 +128,9 @@ export const Day = (props) => {
                                             let style = {
                                                 top:`${start}`,
                                                 height:`${block_size * between}`
-                                            }
+                                            }                                            
+
+
                                             //案1）スケジュールの表示  
                                             // let newElement = document.createElement('div');
                                             // let newContent = document.createTextNode(dayVal.sch_contents);
@@ -98,13 +142,16 @@ export const Day = (props) => {
                                             //案2）スケジュールの表示 
                                             const schTime = sliceTime(dayVal.sch_time);
                                             const schEndTime = sliceTime(dayVal.sch_end_time);
-                                            targetId.innerHTML = `<div class='content-detail' style=height:${block_size * between}px><span>${schTime} - ${schEndTime}</span><p>${dayVal.sch_contents}</p></div>`
+                                            targetId.innerHTML = `<div class='content-detail' style=height:${block_size * between}px id=${dayVal.id + 40000}><span>${schTime} - ${schEndTime}</span><p>${dayVal.sch_contents}</p></div>`
+                                            let detailClick = document.getElementById(dayVal.id + 40000);
+                                            detailClick.addEventListener('click',editHandleClickOpen);
                                         }
                                     })}
                             </div>
                         ))}    
                     </div>        
             </div>
+            <UpdateForm open={editOpen} onClose={editHandleClose} editData = {editData} setEditData = {setEditData} />
         </div>
     )
 }

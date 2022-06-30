@@ -3,7 +3,6 @@ li{
   font-size:0.8rem;
 }
 
-
 .day{
   width:30%;
   background-color:  #f7fafc;
@@ -14,14 +13,12 @@ li{
     }
   }
 
-
   .time-table{
-    // background-color: bisque;
     width: 96%;
     height: 780px;
     margin: 0 auto;
     overflow-y:scroll;
-    
+
     .tag-tables{
       float: left;
       display: flex;
@@ -29,8 +26,6 @@ li{
       width: 13%;
       .time-tag{
         text-align: center;
-        // width: 97%;
-        // position: absolute;
       }
     }
     .content-tables{
@@ -45,7 +40,7 @@ li{
           background-color:rgb(196, 203, 213);
           text-align: center;
           border-top:solid 0.5px #FFF;
-          // color: black;
+          cursor: pointer;
         }
       }
     }

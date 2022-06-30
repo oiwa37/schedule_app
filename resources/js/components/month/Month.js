@@ -2,10 +2,11 @@ import React,{ Fragment, useState, useEffect  } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Navigation from './navigation/Navigation';
-import { zeroPadding, sliceYear } from '../common/Common';
+import { zeroPadding, titleLimit, countSche } from '../common/Common';
 import RegisterForm from './register/RegisterForm';
 import UpdateForm from './update/updateForm';
 import GetSchedule from './getSchedule/GetSchedule';
+import { values } from 'lodash';
 
 
 function Month(props){
@@ -17,10 +18,8 @@ function Month(props){
     const prevlast = new Date(year,month-1,0).getDate()        //先月の最終日を取得
     const calendar = createCalendar(year,month) 
     const WeekChars = [ "(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)" ];
-
     const username = localStorage.getItem('auth_name');         //ユーザーネーム
     const userId = localStorage.getItem('auth_id');             //ユーザーID
-
 
 
     // 登録済みのスケジュールデータを取得
@@ -84,8 +83,6 @@ function Month(props){
         const msg = textMsg.textContent; //ex)2022年1月
         const res = msg.replace(/[^0-9]/g, ''); //20221
         const resLength = res.length;
-
-
 
         if(resLength < 6){ //一桁の月
             const a = res.slice(0, 4) //2022
@@ -166,7 +163,7 @@ function Month(props){
             }
         }
     }
-    
+
 
     return (
         <div className="month">
@@ -182,13 +179,12 @@ function Month(props){
                         <tr key={week.join('')}>
                             {week.map((day,j) => (
                                 <td key={`${i}${j}`} id={day} onClick={scheduleOpen}>
-                                    <div>
+                                    <div >
                                             {day > last ? <div className="disable">{day - last}</div> : day <= 0 ? <div className="disable">{prevlast + day}</div> : day}
-                                        
                                         <div className="schedule-area">
                                             {rows.map((schedule,k) => (
                                                 schedule.sch_date == year + '-' + zeroPadding(month) + '-' + zeroPadding(day) &&
-                                                    <div className='schedule-title' key={k} id={schedule.sch_id}     onClick={editHandleClickOpen} >{schedule.sch_contents}</div>
+                                                    <div className='schedule-title' key={k} id={schedule.sch_id}     onClick={editHandleClickOpen} >{titleLimit(schedule.sch_contents)}</div>
                                             ))}
                                         </div>
                                     </div>

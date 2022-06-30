@@ -4,8 +4,7 @@ import React,{ Fragment, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import GetSchedule from '../month/getSchedule/GetSchedule';
 import UpdateForm from '../month/update/updateForm';
-import { todos } from '../common/Common';
-import { zeroPadding } from '../common/Common';
+import { todos, todoTitleLimit } from '../common/Common';
 import EditIcon from '@material-ui/icons/Edit';
 import { TodayOutlined } from '@material-ui/icons';
 
@@ -14,10 +13,10 @@ export const TodoList = ({task,setTask}) => {
 
     const userId = localStorage.getItem('auth_id'); //ユーザーID
 
-    //データの編集用
+    //データの編集状態を管理
     const [editTask, setEditTask] = useState({id:'',sch_category:'',sch_contents:'',sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''})
 
-    // スケジュールデータを取得
+    // スケジュールデータを取得し格納
     let todoList = GetSchedule();
 
         //  データの削除
@@ -81,7 +80,7 @@ export const TodoList = ({task,setTask}) => {
                         <label className="my-checkbox" >
                             <input type= "checkbox"  name="checkbox" />
                             <span className="checkmark"></span>
-                            <div className="todoText">{todo.sch_contents}</div>
+                            <div className="todoText">{todoTitleLimit(todo.sch_contents)}</div>
                         </label>
                         <div className="icons">    
                             <button className="edit-btn"  id={todo.sch_id} onClick={editHandleClickOpen}>
