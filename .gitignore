@@ -22,10 +22,6 @@ artisan
 phpunit.xml
 tailwind.config.js
 docker-compose.yml
-package-lock.json
-package.json
-composer.json
-composer.lock
 webpack.mix.js
 /tests
 /docker
