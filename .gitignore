@@ -6,8 +6,6 @@
 .env
 .env.backup
 .phpunit.result.cache
-Homestead.json
-Homestead.yaml
 npm-debug.log
 yarn-error.log
 /.idea
@@ -16,11 +14,6 @@ yarn-error.log
 .styleci.yml
 .editorconfig
 artisan
-phpunit.xml
 tailwind.config.js
-docker-compose.yml
-webpack.mix.js
-/tests
 /docker
-/lang
 README.md
