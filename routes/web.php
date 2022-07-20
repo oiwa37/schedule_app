@@ -24,7 +24,12 @@ use Illuminate\Support\Facades\Route;
 // Route::get('{any}', function(){return view('app');})->where('any','.*');
 
 
-//ログイン機能追加のため
+//全てindexに移動
 Route::get('/{any}', function () {
     return view('index');
 })->where('any', '.*');
+
+
+// Route::fallback(function () {
+//     return file_get_contents(public_path('index.php'));
+// });

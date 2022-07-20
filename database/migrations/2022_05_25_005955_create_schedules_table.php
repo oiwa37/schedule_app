@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id')->unsigned(); 
             //usersテーブルのidカラムにuser_idカラムを関連付ける
-            $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('user_id')->references('id')->on('users');
             $table->date('sch_date')->nullable();
             $table->time('sch_time')->nullable();
             $table->time('sch_end_time')->nullable();

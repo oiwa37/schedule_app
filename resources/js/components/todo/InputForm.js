@@ -3,24 +3,22 @@ import AddIcon from '@mui/icons-material/Add';
 
 export const InputForm = (props) => {
     const { task, setTask } = props;
-    // const[inputText, setInputText] = useState("")
 
-    // タスクを登録処理
+    // フォームへの入力値をセットする
     const inputChange = (e) => {
         const key = e.target.name;
         const value = e.target.value;
         task[key] = value;
-        let datas = Object.assign({},task); //{}にデータをコピー
+        let datas = Object.assign({},task);  //{}にデータをコピー
         setTask(datas);
-        console.log(datas);
+        // console.log(datas);
     }
 
      //登録処理
     const createTask = async() => {
         //空入力を防ぐ
-        if(task.sch_contents == ''){
-            return;
-        }
+        if( task.sch_contents == '' ){ return; }
+        
         //入力値を渡す
         await axios
             .post('/api/posts/create',{

@@ -8,27 +8,21 @@ export const Register = () => {
 
     const history = useHistory();
 
-    const [registerInput, setRegister] = useState({
-        name: '',
-        email: '',
-        password: '',
-        error_list: [],
-    });
+    const [registerInput, setRegister] = useState({ name: '', email: '', password: '', error_list: [], });
 
+    //フォームに入力された時の動作
     const handleInput = (e) => {
         e.persist();
         setRegister({...registerInput, [e.target.name]: e.target.value });
     }
-
+    //サブミットボタンが押された時の動作
     const registerSubmit = (e) => {
         e.preventDefault();
-
-        const data = {
+        const data = { 
             name: registerInput.name,
             email: registerInput.email,
             password: registerInput.password,
         }
-
         axios.get('/sanctum/csrf-cookie').then(response => {
             axios.post(`/api/register`, data).then(res => {
                 if(res.data.status === 200){
@@ -43,7 +37,6 @@ export const Register = () => {
             });
         });
     }
-
 
     return (
     <div className="container">

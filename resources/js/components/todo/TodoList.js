@@ -6,11 +6,8 @@ import GetSchedule from '../month/getSchedule/GetSchedule';
 import UpdateForm from '../month/update/updateForm';
 import { todos, todoTitleLimit } from '../common/Common';
 import EditIcon from '@material-ui/icons/Edit';
-import { TodayOutlined } from '@material-ui/icons';
-
 
 export const TodoList = ({task,setTask}) => {
-
     const userId = localStorage.getItem('auth_id'); //ユーザーID
 
     //データの編集状態を管理
@@ -19,20 +16,20 @@ export const TodoList = ({task,setTask}) => {
     // スケジュールデータを取得し格納
     let todoList = GetSchedule();
 
-        //  データの削除
-        // const deleteTodo = (sch_id) =>{
-        //     axios
-        //         .post('api/delete',{
-        //             id:sch_id
-        //         })
-        //         .then((response)=>{
-        //             console.log(response);
-        //             return true;
-        //         })
-        //         .catch(error=>{
-        //             console.log(error);
-        //         });
-        // }
+    //  データの削除
+    // const deleteTodo = (sch_id) =>{
+    //     axios
+    //         .post('api/delete',{
+    //             id:sch_id
+    //         })
+    //         .then((response)=>{
+    //             console.log(response);
+    //             return true;
+    //         })
+    //         .catch(error=>{
+    //             console.log(error);
+    //         });
+    // }
 
     // 更新用ダイヤログ開閉機能
         const [ editOpen, setEditOpen ] = useState(false);

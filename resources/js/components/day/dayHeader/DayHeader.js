@@ -1,12 +1,9 @@
-import React,{ Fragment, useState, useEffect  } from 'react';
+import React from 'react';
 
 export const DayHeader = (props) => {
     
     const { currentDate } = props;
 
-
-    //todoと同じで全データ取得後にフィルターをかける？
-    //該当の日付でデータを取得したいのが本音
     return (
         <div className="day-header">
             {/* 初期値は今日の日付 カレンダークリックで該当の日付の日程を取ってくる */}

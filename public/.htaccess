@@ -4,19 +4,35 @@
     </IfModule>
 
     RewriteEngine On
-    RewriteBase /
+    # ベースのURLを指定する
+    # RewriteBase /
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
     # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+    # RewriteCond %{REQUEST_FILENAME} !-d
+    # RewriteCond %{REQUEST_URI} (.+)/$
+    # RewriteRule ^.*$ %1 
+    # RewriteRule ^ %1 [L,R=301]
 
+    #下記拡張子の場合はリダイレクトしない
+    RewriteCond %{REQUEST_FILENAME} ^.*\.png$ [OR]
+    RewriteCond %{REQUEST_FILENAME} ^.*\.css$ 
+    RewriteRule ^ - [L]
+    # RewriteCond %{REQUEST_FILENAME} ^.*\.js$
+    
     # Send Requests To Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+    RewriteRule ^ index.php [QSA,L]
+
+    # RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+    # RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+    # RewriteRule ^ - [L]
+
+    # Fallback all other routes to index.html
+    # RewriteRule ^ index.php [L]
+
 </IfModule>

@@ -1,5 +1,6 @@
 {
     "private": true,
+    "homepage": "https://oiwa1105.com/schedule_app/public",
     "scripts": {
         "dev": "npm run development",
         "development": "mix",

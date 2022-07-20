@@ -16,9 +16,7 @@ import Delete from '../delete/Delete';
 function UpdateForm(props){
     const { open, onClose, editData, setEditData } = props;
 
-    const editHandleClose = () =>{
-        onClose();
-    };
+    const editHandleClose = () =>{ onClose(); };
     
     //入力値を一時保存
     const editChange = (e) =>{
@@ -122,10 +120,5 @@ function UpdateForm(props){
         </Dialog>
     );
 }
-
-// UpdateForm.propTypes = {
-//     onClose:PropTypes.func.isRequired,
-//     open:PropTypes.bool.isRequired,
-// };
 
 export default UpdateForm;

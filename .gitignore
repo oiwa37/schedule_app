@@ -13,7 +13,6 @@ yarn-error.log
 .gitattributes
 .styleci.yml
 .editorconfig
-artisan
 tailwind.config.js
 /docker
 README.md

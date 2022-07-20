@@ -7,11 +7,11 @@ import UpdateForm from '../month/update/updateForm';
 
 export const Day = (props) => {
     const { currentDate, setCurrentDate, daySchedule, setDaySchedule, days, setDays } = props;
-    const userId = localStorage.getItem('auth_id'); //ユーザーID
+    const userId = localStorage.getItem('auth_id'); //ユーザーID取得
 
     // 更新用ダイヤログ開閉機能
     const [ editOpen, setEditOpen ] = useState(false);
-    //クリックイベント
+    //予定をクリックした際のイベント
     const editHandleClickOpen = (e) =>{
         e.stopPropagation();
         setEditOpen(true);
@@ -20,7 +20,6 @@ export const Day = (props) => {
     const editHandleClose = () =>{ setEditOpen(false); }
     //更新用データ配列
     const [ editData, setEditData ] = useState({id:'', user_id:userId, sch_category:'',sch_contents:'',sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''});
-
 
     // バックエンドから該当のデータを取得
     function getEditData(e){
@@ -69,8 +68,8 @@ export const Day = (props) => {
     
     //案2）タイムテーブル用
     const base_time = moment(days); //テーブルの開始時刻
-    let block_size = 55;  //1時間の縦幅
-    let block_number = 0; //開始時刻を0として連番をつける
+    let block_size = 55;            //1時間の縦幅
+    let block_number = 0;           //開始時刻を0として連番をつける
 
     const times = []; //時刻とblock_number格納用の配列
     for(let i = 0; i < 24; i++ ){
@@ -83,7 +82,7 @@ export const Day = (props) => {
     }
 
     let style = {}; //CSSスタイル用配列
-    //日付が変わったタイミングで入っている予定をリセット 
+    //予定が重複しないように、日付が変わったタイミングで既に入っている予定を削除する 
     useEffect(()=>{removeChildren();},[currentDate])
     const removeChildren = () =>{
         const ele = document.getElementsByClassName('time-content');
@@ -95,13 +94,9 @@ export const Day = (props) => {
         }
     }
 
-
-
-
     return (
         <div className="day">
             <DayHeader currentDate={currentDate} />
-
             <div className="time-table" id='time-table'>
                     <div className='tag-tables'>
                         { times.map((val,index) => (
@@ -114,10 +109,9 @@ export const Day = (props) => {
                         { times.map((schVal, schIndex)=>(
                             <div className="time-content relative" key={schIndex} id={schIndex}
                             style={{height:`${block_size}px`, top:`${schVal.block_number} * ${block_size}`}}>
-                                    
                                     { daySchedule.map((dayVal, dayIndex)=>{
                                         let schid = schIndex;
-                                        const targetId = document.getElementById(schid); 
+                                        const targetId = document.getElementById(schid);  //time-content要素を取得
                                         const timeTable = document.getElementById('time-table'); //スクロール表示領域の要素を取得
                                         timeTable.scrollTop = 330; //スクロール初期位置を設定
                                         if(schIndex == sliceValue(dayVal.sch_time)){
@@ -129,8 +123,6 @@ export const Day = (props) => {
                                                 top:`${start}`,
                                                 height:`${block_size * between}`
                                             }                                            
-
-
                                             //案1）スケジュールの表示  
                                             // let newElement = document.createElement('div');
                                             // let newContent = document.createTextNode(dayVal.sch_contents);

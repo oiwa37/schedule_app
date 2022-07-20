@@ -9,12 +9,10 @@ function GlobalNav () {
 
     const logoutSubmit = (e) => {
         e.preventDefault();
-
         axios.post(`/api/logout`).then(res => {
             if (res.data.status === 200) {
                 localStorage.removeItem('auth_token', res.data.token);
                 localStorage.removeItem('auth_name', res.data.username);
-                // swal("ログアウトしました", res.data.message, "success");
                 history.push('/top');
                 location.reload();
             } 
@@ -22,7 +20,10 @@ function GlobalNav () {
     }
 
     let AuthButtons = '';
-
+    
+    //ログインチェックし、
+    //未ログインの場合は、ログイン・サインアップボタンを表示
+    //ログインの場合は、ログアウトボタンを表示する。
     if (!localStorage.getItem('auth_token')){
         AuthButtons = (
             <ul>
@@ -40,7 +41,6 @@ function GlobalNav () {
         );
     } else {
         AuthButtons = (
-
                 <div onClick={logoutSubmit}>
                     <span className="logout-btn">Log Out</span>
                 </div>

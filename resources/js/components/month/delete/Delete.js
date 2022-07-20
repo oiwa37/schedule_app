@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 
 function Delete(props){
     const { editData } = props;
-
+    
     //削除処理
     const deleteSchedule = async( post ) =>{
         await axios
@@ -22,7 +22,7 @@ function Delete(props){
     }
 
     return (
-        <Button href="/" onClick={deleteSchedule}>Delete</Button>
+        <Button href="https://oiwa1105.com/schedule_app/public/" onClick={deleteSchedule}>Delete</Button>
     );
 }
 
