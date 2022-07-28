@@ -8,16 +8,11 @@ import moment from 'moment';
 import 'moment/locale/ja';
 
 function Example(props){
-
-    //必要なし。問題なければ削除
-    // const [ year, setYear ] = useState(new Date().getFullYear())  //年(4桁)
-    // const [ month, setMonth ] = useState(new Date().getMonth()+1) //0~11のため+1
-    // const [ date, setDate ] =useState(new Date().getDate()); //日にち
     
-    const now = moment(new Date()); // 今日の日付 Fri Jan 01 2021 05:59:01 GMT+0900 
-    const [ currentDate, setCurrentDate ] = useState(now.format('M月DD日(dd)')) //6月01日(日) （初期値:今日）
-    const [ days, setDays ] = useState(now.format('YYYY-MM-DD'))  //2022-06-09表記の日付 
-    const [ daySchedule, setDaySchedule ] = useState([]) //日付のデータ格納
+    const now = moment(new Date());                                              // 今日の日付 Fri Jan 01 2021 05:59:01 GMT+0900 
+    const [ currentDate, setCurrentDate ] = useState(now.format('M月DD日(dd)'))  // 6月01日(日) （初期値:今日）
+    const [ days, setDays ] = useState(now.format('YYYY-MM-DD'))                // 2022-06-09表記の日付 
+    const [ daySchedule, setDaySchedule ] = useState([])                        // 日付のデータ格納
     
     //ログインチェックで分岐。ログイン状態の場合のみ画面表示
     let main = '';

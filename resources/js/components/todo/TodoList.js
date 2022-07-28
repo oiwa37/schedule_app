@@ -68,15 +68,26 @@ export const TodoList = ({task,setTask}) => {
                 });
         }
 
-        const todoIndex = 30000;
+
+
+
+
+
+
+
+
+
+
+
+        const todoIndex = 30000; //ユニークなキーを用意するため
 
     return (
         <div className="todoList">
                 {todoList.filter(todos).map((todo,index) => (
                     <div className="todoGroup" key={todoIndex + index}  id={todo.sch_id}>
-                        <label className="my-checkbox" >
-                            <input type= "checkbox"  name="checkbox" />
-                            <span className="checkmark"></span>
+                        <label className="my-checkbox"  >
+                            {/* <input type="checkbox"  name="checkbox" />
+                            <span className="checkmark"></span> */}
                             <div className="todoText">{todoTitleLimit(todo.sch_contents)}</div>
                         </label>
                         <div className="icons">    
@@ -92,8 +103,6 @@ export const TodoList = ({task,setTask}) => {
             <UpdateForm open={editOpen} onClose={editHandleClose} editData = {editData} setEditData = {setEditData} />
         </div>
     )
-
-
 }
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Example from './Example';
 import Register from './Register';
 import Login from './Login';
@@ -9,7 +9,7 @@ import GlobalNav from './GlobalNav';
 import axios from 'axios';
 
 
-// axios.defaults.baseURL = "http://localhost/";
+// axios.defaults.baseURL = "http://localhost/";  ローカル環境でのdefaultURL
 axios.defaults.baseURL = "https://oiwa1105.com/schedule_app/public/";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
@@ -25,7 +25,7 @@ axios.interceptors.request.use(function(config){
 function App(){
     return (
         <BrowserRouter
-            basename='/schedule_app/public'>
+            basename="/schedule_app/public">
             <GlobalNav />
             <Switch>
                 <Route path="/top">

@@ -11514,7 +11514,7 @@ button {
   /* ✓ */
 }
 .my-checkbox input:checked + .checkmark {
-  border-color: rgb(240, 246, 246);
+  border-color: rgb(255, 255, 255);
 }
 .my-checkbox input:checked + .checkmark:after {
   opacity: 1;

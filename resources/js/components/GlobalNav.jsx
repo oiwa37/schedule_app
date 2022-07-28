@@ -4,12 +4,12 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 function GlobalNav () {
-
     const history = useHistory();
 
+    //ログアウト機能
     const logoutSubmit = (e) => {
         e.preventDefault();
-        axios.post(`/api/logout`).then(res => {
+        axios.post('/api/logout').then(res => {
             if (res.data.status === 200) {
                 localStorage.removeItem('auth_token', res.data.token);
                 localStorage.removeItem('auth_name', res.data.username);
@@ -19,11 +19,10 @@ function GlobalNav () {
         });
     }
 
-    let AuthButtons = '';
-    
     //ログインチェックし、
     //未ログインの場合は、ログイン・サインアップボタンを表示
     //ログインの場合は、ログアウトボタンを表示する。
+    let AuthButtons = ''; 
     if (!localStorage.getItem('auth_token')){
         AuthButtons = (
             <ul>
@@ -58,7 +57,6 @@ function GlobalNav () {
                 </div>
             </div>
         </Fragment>
-
     )
 }
 

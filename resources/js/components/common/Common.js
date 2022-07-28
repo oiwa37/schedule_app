@@ -1,9 +1,3 @@
-//共通で使用する関数
-//todoIndex 30000
-//dayIndex  40000
-//monthIndex 50000
-
-
 /**
  * 先頭に0をつける（ 一桁の数字の場合 5 → 05 ）
  * @param int num 
@@ -24,8 +18,6 @@ export function zeroPadding(num){
       return value;
   }
 }
-
-
 
 
 //文字列の長さを管理する関数

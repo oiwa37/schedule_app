@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
-import DialogContentText from '@mui/material/DialogContentText';
+// import DialogContentText from '@mui/material/DialogContentText';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import InputLabel from '@mui/material/InputLabel';
@@ -14,11 +14,10 @@ import Select from '@mui/material/Select';
 
 
 function RegisterForm(props){
-
     const { open, onClose, formData, setFormData } = props;
 
+    //ダイヤログを閉じる
     const handleClose = () =>{ onClose(); };
-
     //フォームへの入力値を一時保存
     const inputChange = (e) =>{
         const key = e.target.name;
@@ -30,12 +29,12 @@ function RegisterForm(props){
     }
 
     return (
-        //  スケジュール登録ダイヤログ
+        //  スケジュール登録ダイヤログの内容
         <Dialog onClose={handleClose} open={open} >
         <DialogTitle>スケジュール登録</DialogTitle>
         <DialogContent>
             {/* <DialogContentText>
-                スケジュール登録
+                スケジュール登録 （タイトル下に入る説明文部分）
             </DialogContentText> */}
             <TextField required 
                 margin="dense"

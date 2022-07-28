@@ -184,7 +184,7 @@ function Month(props){
                                         <div className="schedule-area">
                                             {rows.map((schedule,k) => (
                                                 schedule.sch_date == year + '-' + zeroPadding(month) + '-' + zeroPadding(day) &&
-                                                    <div className='schedule-title' key={k} id={schedule.sch_id}     onClick={editHandleClickOpen} >{titleLimit(schedule.sch_contents)}</div>
+                                                    <div className='schedule-title' key={k} id={schedule.sch_id} onClick={editHandleClickOpen} >{titleLimit(schedule.sch_contents)}</div>
                                             ))}
                                         </div>
                                     </div>
@@ -210,6 +210,5 @@ function createCalendar(year,month){
         })
     })
 }
-
 
 export default Month;
