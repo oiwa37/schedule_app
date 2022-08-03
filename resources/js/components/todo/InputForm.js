@@ -25,6 +25,7 @@ export const InputForm = (props) => {
                 user_id:task.user_id,
                 sch_category:task.sch_category,
                 sch_contents:task.sch_contents,
+                sch_status:task.sch_status,
                 // sch_memo:task.sch_memo,
                 sch_date:task.sch_date,
                 sch_time:task.sch_hour + ':' + task.sch_min,

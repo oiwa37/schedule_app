@@ -12,7 +12,7 @@ export const Todo = () => {
     const userId = localStorage.getItem('auth_id');     //ユーザーID
 
     //Todoの状態を管理
-    const [task, setTask]= useState({user_id:userId,id:'',sch_contents:'',sch_category:'なし',sch_date:'',sch_hour:'00',sch_min:'00',sch_end_hour:'00',sch_end_min:'00'});
+    const [task, setTask]= useState({user_id:userId,id:'',sch_status:1,sch_contents:'',sch_category:'なし',sch_date:'',sch_hour:'00',sch_min:'00',sch_end_hour:'00',sch_end_min:'00'});
 
     return (
         <Fragment>

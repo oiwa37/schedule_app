@@ -44,7 +44,7 @@ export const Top = () => {
             </div>
 
             <div className='bottom-content'>
-                <div className='bottom-text'>ここから始める</div>
+                {/* <div className='bottom-text'>ここから始める</div> */}
                 <div className='button'>
                     <ul>
                         <li>

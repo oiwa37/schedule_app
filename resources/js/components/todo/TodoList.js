@@ -41,7 +41,7 @@ export const TodoList = ({task,setTask}) => {
         const editHandleClose = () =>{ setEditOpen(false); }
 
         //更新用データ配列
-        const [ editData, setEditData ] = useState({id:'',sch_category:'',sch_contents:'',sch_status:'', sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''});
+        const [ editData, setEditData ] = useState({id:'',sch_status:0,sch_category:'',sch_contents:'',sch_status:'', sch_date:'',sch_hour:'',sch_min:'',sch_end_hour:'',sch_end_min:''});
 
         // バックエンドから該当のデータを取得
         function getEditData(e){
@@ -68,16 +68,50 @@ export const TodoList = ({task,setTask}) => {
                 });
         }
 
+        //TODOの完了未完了をスイッチする。
+        const editStatus = (e) =>{
+            getEditData(e);
 
-
-
-
-
-
-
-
-
-
+            if(editData.sch_status == 1){
+                console.log("1");
+                axios
+                .post('/api/update',{
+                    id: editData.id,
+                    sch_category:editData.sch_category,
+                    sch_contents:editData.sch_contents,
+                    sch_status:2,
+                    // sch_memo:editData.sch_memo,
+                    sch_date:editData.sch_date,
+                    sch_time:editData.sch_hour + ':' + editData.sch_min,
+                    sch_end_time:editData.sch_end_hour + ':' + editData.sch_end_min
+                })
+                .then((response)=>{
+                    setEditData(response.data);
+                })
+                .catch(error=>{
+                    console.log(error);
+                })
+            }else if(editData.sch_status == 2){
+                console.log("2");
+                axios
+                .post('/api/update',{
+                    id: editData.id,
+                    sch_category:editData.sch_category,
+                    sch_contents:editData.sch_contents,
+                    sch_status:1,
+                    // sch_memo:editData.sch_memo,
+                    sch_date:editData.sch_date,
+                    sch_time:editData.sch_hour + ':' + editData.sch_min,
+                    sch_end_time:editData.sch_end_hour + ':' + editData.sch_end_min
+                })
+                .then((response)=>{
+                    setEditData(response.data);
+                })
+                .catch(error=>{
+                    console.log(error);
+                })
+            }
+        }
 
         const todoIndex = 30000; //ユニークなキーを用意するため
 
@@ -85,11 +119,13 @@ export const TodoList = ({task,setTask}) => {
         <div className="todoList">
                 {todoList.filter(todos).map((todo,index) => (
                     <div className="todoGroup" key={todoIndex + index}  id={todo.sch_id}>
-                        <label className="my-checkbox"  >
-                            {/* <input type="checkbox"  name="checkbox" />
-                            <span className="checkmark"></span> */}
+                        {/* <label className="my-checkbox" id={todo.sch_id} onClick={editStatus}> */}
+                        {/* 完了ステータスであれば(未完了ステータス1でなければ)、チェックボックスにチェックが入る */}
+                        {todo.sch_status == 1 ? <input type="checkbox"  name="checkbox" onChange={editStatus} id={todo.sch_id}/>:
+                        <input type="checkbox"  name="checkbox" checked onChange={editStatus} id={todo.sch_id} /> }  
+                            {/* <span className="checkmark"></span> */}
                             <div className="todoText">{todoTitleLimit(todo.sch_contents)}</div>
-                        </label>
+                        {/* </label> */}
                         <div className="icons">    
                             <button className="edit-btn"  id={todo.sch_id} onClick={editHandleClickOpen}>
                                 <EditIcon />

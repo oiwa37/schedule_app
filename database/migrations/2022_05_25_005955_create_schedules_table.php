@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('sch_category')->nullable();
             $table->string('sch_contents');
             $table->string('sch_memo')->nullable();
-            $table->integer('sch_status')->default(1)->nullable();
+            $table->integer('sch_status')->default(1);
             $table->timestamps();
         });
     }

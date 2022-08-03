@@ -33,7 +33,7 @@ function Month(props){
     const handleClose = () =>{ setOpen(false); };
 
     //新規登録用データ配列
-    const [formData,setFormData] = useState({user_id:userId,sch_contents:'',sch_date:'',sch_hour:'00',sch_min:'00',sch_end_hour:'00',sch_end_min:'00',sch_category:'なし'});
+    const [formData,setFormData] = useState({user_id:userId,sch_status:1,sch_contents:'',sch_date:'',sch_hour:'00',sch_min:'00',sch_end_hour:'00',sch_end_min:'00',sch_category:'なし'});
 
     // 更新用ダイヤログ開閉機能
     const [ editOpen, setEditOpen ] = useState(false);
