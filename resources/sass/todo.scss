@@ -40,7 +40,8 @@ button{
           height: 30px;
           color: rgb(255, 255, 255);
           &:hover{
-            background-color: rgb(159, 160, 188);
+            // background-color: rgb(159, 160, 188);
+            background-color:#419976;
           }
         }
       }
@@ -59,6 +60,10 @@ button{
   // flex-direction: row;
   // padding:3px;
   background-color: rgb(255, 255, 255);
+    /* inputは非表示にする */
+  input {
+    display: none;
+  }
 }
 .icons{
   float: right;
@@ -73,65 +78,74 @@ button{
       color:#419976;
     }
   }
-  
+}
+.checkbox{
+  // float: left;
+}
+.todoText{
 }
 
 
+
+
 //チェックボックス
-// .my-checkbox {
-//   display: block;
-//   position: relative;
-//   // margin: 1em 0;
-//   padding:7px 0 0 33px;
-//   color: rgba(0, 0, 0, 0.7);
-//   cursor: pointer;
-//   user-select: none; /* テキストが選択されてしまうのを防ぐ */
-//   /* inputは非表示にする */
-//   input {
-//     display: none;
-//   }
-// }
+.my-checkbox {
+  // display: block;
+  display: flex;
+
+  position: relative;
+  // margin: 1em 0;
+  padding:7px 0 0 33px;
+  color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  user-select: none; /* テキストが選択されてしまうのを防ぐ */
+  /* inputは非表示にする */
+  input {
+    display: none;
+  }
+}
 // // チェックが入る前
 // /* □ */
-// .checkmark {
-//   position: absolute;
-//   top: 10px; /* 上からの位置 */
-//   left: 7px;
-//   height: 17px; /* 幅 */
-//   width: 17px; /* 幅 */
-//   border: solid 1px rgb(105, 105, 120); /* 線 */
-//   // border-radius: 4px;
-//   box-sizing: border-box;
+.checkmark {
+  position: absolute;
+  top: 10px; /* 上からの位置 */
+  left: 7px;
+  height: 17px; /* 幅 */
+  width: 17px; /* 幅 */
+  border: solid 1px rgb(105, 105, 120); /* 線 */
+  // border-radius: 4px;
+  box-sizing: border-box;
 
 //   /* ✓ */
-//   &:after {
-//     content: "";
-//     position: absolute;
-//     border: solid 1px rgb(105, 105, 120);
-//     border-width: 0 2px 2px 0;
-//     left: 6px;
-//     top: 0;
-//     width: 9px;
-//     height: 14px;
-//     transform: rotate(45deg);
-//     opacity: 0; /* 透明にしておく */
-//   }
-// }
+  &:after {
+    content: "";
+    position: absolute;
+    border: solid 1px rgb(105, 105, 120);
+    border-width: 0 2px 2px 0;
+    left: 6px;
+    top: 0;
+    width: 9px;
+    height: 14px;
+    transform: rotate(45deg);
+    opacity: 0; /* 透明にしておく */
+  }
+}
 
 // /* チェックが入ったとき */
-// .my-checkbox {
-//   /* □ */
-//   input:checked + .checkmark {
-//     // background: #9999e9; 
-//     border-color:  rgb(255, 255, 255); 
-//   }
-//   /* ✓ */
-//   input:checked + .checkmark:after {
-//     opacity: 1;
-//   }
-//   input:checked + .todoText{
-//     text-decoration: line-through;
-//   }
-// }
+.my-checkbox {
+  /* □ */
+  input:checked + .checkmark {
+    // background: #9999e9; 
+    border-color:  rgb(255, 255, 255); 
+  }
+  /* ✓ */
+  input:checked + .checkmark:after {
+    opacity: 1;
+  }
 
+}
+input[type=checkbox]:checked ~ .todoText{
+    text-decoration: line-through;
+    color:rgba(143, 142, 142, 0.7);
+}
 

@@ -56,6 +56,16 @@ class ScheduleController extends Controller {
         return $schedules;
     }
 
+        //ステータスを更新
+        public function updateStatus(Request $request){
+            // $id = (int) $request->input('id');
+            $schedules = Schedule::find($request->id);
+            $schedules->sch_status = $request->sch_status;
+            $schedules->save();
+            return $schedules;
+        }
+
+
     //データを削除
     public function delete(Request $request){
         $schedule = Schedule::find($request->id);

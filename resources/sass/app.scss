@@ -93,22 +93,36 @@
             }
         }
     }
+
+    
+}
+
+.header-right{
+    float: right;
+    display: flex;
+    margin-right:50px;
+    margin-top: 13px;
     .logout-btn{
+        font-size: 1.05rem;
         color: #373e71;
         padding: 7px 10px;
-        float: right;
-        margin-right:100px;
-        // padding: 7px 10px;
+        margin-right:20px;
         transition: .2s ;
         cursor: pointer;
         border-radius: 4px;
-        margin-top: 7px;
         &:hover{
             background-color:rgba(120, 162, 204, 0.3);
             }
     }
-    
+    .setting-btn{
+        color: #373e71;
+        &:hover{
+            color:#419976;
+            }
+    }
 }
+
+
 
 
 //topページのボタン
@@ -186,9 +200,6 @@
         }
     }
 }
-
-
-
 
 
 .middle-content{

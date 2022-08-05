@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { set } from 'lodash';
-import React,{ Fragment, useState, useEffect } from 'react';
+import React,{ Fragment, useState } from 'react';
 import ReactDOM from 'react-dom';
 import GetSchedule from '../month/getSchedule/GetSchedule';
 import UpdateForm from '../month/update/updateForm';
 import { todos, todoTitleLimit } from '../common/Common';
 import EditIcon from '@material-ui/icons/Edit';
+import { checkboxClasses } from '@mui/material';
 
 export const TodoList = ({task,setTask}) => {
     const userId = localStorage.getItem('auth_id'); //ユーザーID
@@ -66,24 +67,22 @@ export const TodoList = ({task,setTask}) => {
                 .catch(() => {
                     console.log('通信に失敗しました');
                 });
-        }
+        }            
+        
+        const [checked, setChecked]=useState(false);
 
         //TODOの完了未完了をスイッチする。
         const editStatus = (e) =>{
-            getEditData(e);
-
-            if(editData.sch_status == 1){
-                console.log("1");
+            //チェクボックスの要素を取得
+            let checkbox = document.getElementById(e.currentTarget.id);
+            console.log(checkbox);
+            //クリック元の要素のチェック状態で分岐する
+            if(!checkbox.checked){
+                console.log("未チェックに変更");
                 axios
-                .post('/api/update',{
-                    id: editData.id,
-                    sch_category:editData.sch_category,
-                    sch_contents:editData.sch_contents,
-                    sch_status:2,
-                    // sch_memo:editData.sch_memo,
-                    sch_date:editData.sch_date,
-                    sch_time:editData.sch_hour + ':' + editData.sch_min,
-                    sch_end_time:editData.sch_end_hour + ':' + editData.sch_end_min
+                .post('/api/updateStatus',{
+                    id: e.currentTarget.id - checkIndex,
+                    sch_status:1,
                 })
                 .then((response)=>{
                     setEditData(response.data);
@@ -91,18 +90,12 @@ export const TodoList = ({task,setTask}) => {
                 .catch(error=>{
                     console.log(error);
                 })
-            }else if(editData.sch_status == 2){
-                console.log("2");
+            }else{
+                console.log("チェック済みに変更");
                 axios
-                .post('/api/update',{
-                    id: editData.id,
-                    sch_category:editData.sch_category,
-                    sch_contents:editData.sch_contents,
-                    sch_status:1,
-                    // sch_memo:editData.sch_memo,
-                    sch_date:editData.sch_date,
-                    sch_time:editData.sch_hour + ':' + editData.sch_min,
-                    sch_end_time:editData.sch_end_hour + ':' + editData.sch_end_min
+                .post('/api/updateStatus',{
+                    id: e.currentTarget.id - checkIndex,
+                    sch_status:2, 
                 })
                 .then((response)=>{
                     setEditData(response.data);
@@ -114,18 +107,19 @@ export const TodoList = ({task,setTask}) => {
         }
 
         const todoIndex = 30000; //ユニークなキーを用意するため
+        const checkIndex = 50000; //ユニークなキーを用意するため
 
     return (
         <div className="todoList">
                 {todoList.filter(todos).map((todo,index) => (
                     <div className="todoGroup" key={todoIndex + index}  id={todo.sch_id}>
-                        {/* <label className="my-checkbox" id={todo.sch_id} onClick={editStatus}> */}
-                        {/* 完了ステータスであれば(未完了ステータス1でなければ)、チェックボックスにチェックが入る */}
-                        {todo.sch_status == 1 ? <input type="checkbox"  name="checkbox" onChange={editStatus} id={todo.sch_id}/>:
-                        <input type="checkbox"  name="checkbox" checked onChange={editStatus} id={todo.sch_id} /> }  
-                            {/* <span className="checkmark"></span> */}
+                        <label className="my-checkbox">
+                            {/* 完了ステータスであれば(未完了ステータス1でなければ)、チェックボックスにチェックが入る */}
+                            {todo.sch_status == 1 ? <input type="checkbox" className="checkbox" defaultChecked={false} name="checkbox" onChange={editStatus} id={checkIndex + todo.sch_id}/>:
+                            <input type="checkbox" className="checkbox" name="checkbox" defaultChecked={true} onChange={editStatus} id={checkIndex + todo.sch_id} /> }  
+                            <span className="checkmark"></span>
                             <div className="todoText">{todoTitleLimit(todo.sch_contents)}</div>
-                        {/* </label> */}
+                        </label>
                         <div className="icons">    
                             <button className="edit-btn"  id={todo.sch_id} onClick={editHandleClickOpen}>
                                 <EditIcon />

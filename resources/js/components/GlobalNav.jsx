@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { Setting } from './common/Setting';
 
 function GlobalNav () {
     const history = useHistory();
@@ -40,9 +41,12 @@ function GlobalNav () {
         );
     } else {
         AuthButtons = (
+            <div className="header-right">
                 <div onClick={logoutSubmit}>
                     <span className="logout-btn">Log Out</span>
                 </div>
+                <Setting />
+            </div>
         );
     }
 
